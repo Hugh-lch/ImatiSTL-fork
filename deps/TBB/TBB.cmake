@@ -1,18 +1,18 @@
 # Include UOS detection module
     set(IS_UOS FALSE)
 
-# Default: no patch
-set(_patch_command "")
+# Default: only patch the minimum CMake version if the downloaded archive needs it.
+set(_patch_command git init && ${PATCH_CMD} ${CMAKE_CURRENT_LIST_DIR}/0001-TBB-CMake-minimum-version.patch)
 
 if (FLATPAK)
-    set(_patch_command ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_LIST_DIR}/GNU.cmake ./cmake/compilers/GNU.cmake)
+    set(_patch_command ${_patch_command} && ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_LIST_DIR}/GNU.cmake ./cmake/compilers/GNU.cmake)
 elseif (IS_UOS)
     # Apply UOS specific patch and LoongArch fix
-    set(_patch_command git init && ${PATCH_CMD} ${CMAKE_CURRENT_LIST_DIR}/uos-patch.patch && ${PATCH_CMD} ${CMAKE_CURRENT_LIST_DIR}/0001-TBB-LoongArch.patch)
+    set(_patch_command ${_patch_command} && ${PATCH_CMD} ${CMAKE_CURRENT_LIST_DIR}/uos-patch.patch && ${PATCH_CMD} ${CMAKE_CURRENT_LIST_DIR}/0001-TBB-LoongArch.patch)
     message(STATUS "Applying UOS specific TBB patch")
 elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "loongarch")
     # Non-UOS LoongArch: apply UOS patch and LoongArch atomic fix as well
-    set(_patch_command git init && ${PATCH_CMD} ${CMAKE_CURRENT_LIST_DIR}/uos-patch.patch && ${PATCH_CMD} ${CMAKE_CURRENT_LIST_DIR}/0001-TBB-LoongArch.patch)
+    set(_patch_command ${_patch_command} && ${PATCH_CMD} ${CMAKE_CURRENT_LIST_DIR}/uos-patch.patch && ${PATCH_CMD} ${CMAKE_CURRENT_LIST_DIR}/0001-TBB-LoongArch.patch)
     message(STATUS "Applying LoongArch TBB patches (uos-patch + atomic fix)")
 endif()
 
