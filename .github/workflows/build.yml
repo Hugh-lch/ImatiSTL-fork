@@ -39,5 +39,11 @@ jobs:
       working-directory: ${{github.workspace}}/build
       # Execute tests defined by the CMake configuration.
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ../bin/STLFix
+      run: ../bin/STLFix ../data/100500.stl ../data/100500_fixed.stl -f
+
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: STLFix-result
+        path: ${{github.workspace}}/data/100500_fixed.stl
 
