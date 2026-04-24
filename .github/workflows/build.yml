@@ -42,7 +42,7 @@ jobs:
       run: ../bin/STLFix ../data/100500.stl ../data/100500_fixed.stl -f
 
     - name: Upload Build Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: STLFix-result
         path: ${{github.workspace}}/data/100500_fixed.stl
