@@ -26,6 +26,21 @@ jobs:
     - name: Install Dependencies
       run: brew install cmake gmp mpfr boost cgal
 
+    - name: Check Environment Variables
+      run: |
+          # 检查系统架构 (必须是 arm64)
+          uname -m
+
+          # 检查编译器和版本
+          clang++ --version
+
+          # 检查核心依赖的具体版本号
+          brew info cgal
+          brew info gmp
+
+          # 打印当前的可用 CPU 核心数
+          sysctl -n hw.ncpu
+
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
@@ -45,5 +60,9 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: STLFix-result
-        path: ${{github.workspace}}/data/100500_fixed.stl
+        path: |
+          ${{github.workspace}}/data/100500_fixed.stl
+          ${{github.workspace}}/bin/STLFix
+          ${{github.workspace}}/lib/libImatiSTL.a
+
 
