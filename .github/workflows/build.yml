@@ -25,16 +25,17 @@ jobs:
 
     - name: Install Dependencies
       run: |
-          brew install autoconf automake libtool texinfo
+          brew install boost gmp mpfr cgal
+          # brew install autoconf automake libtool texinfo
 
-          cd deps
+          # cd deps
 
-          cmake -G Ninja -S . -B dep_build \
-            -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
-            -DDESTDIR=${{github.workspace}}/deps/dep_build/dep_arm64 \
-            -DCMAKE_OSX_DEPLOYMENT_TARGET=11.3
+          # cmake -G Ninja -S . -B dep_build \
+          #   -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
+          #   -DDESTDIR=${{github.workspace}}/deps/dep_build/dep_arm64 \
+          #   -DCMAKE_OSX_DEPLOYMENT_TARGET=11.3
 
-          cmake --build dep_build --config ${{env.BUILD_TYPE}}
+          # cmake --build dep_build --config ${{env.BUILD_TYPE}}
 
     - name: Check Environment Variables
       run: |
