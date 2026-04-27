@@ -69,8 +69,8 @@ else ()
     endif ()
 
     ExternalProject_Add(dep_GMP
-        URL https://gmplib.org/download/gmp/gmp-6.3.0.tar.bz2
-        URL_HASH SHA256=AC28211A7CFB609BAE2E2C8D6058D66C8FE96434F740CF6FE2E47B000D1C20CB
+        URL https://fossies.org/linux/misc/gmp-6.3.0.tar.xz
+        URL_HASH SHA256=A3C2B80201B89E68616F4AD30BC66AEE4927C3CE50E33929CA819D5C43538898
         DOWNLOAD_DIR ${DEP_DOWNLOAD_DIR}/GMP
         PATCH_COMMAND ${patch_command}
         BUILD_IN_SOURCE ON
