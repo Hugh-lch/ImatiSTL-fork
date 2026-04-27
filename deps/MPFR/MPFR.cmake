@@ -1,7 +1,7 @@
 set(_srcdir ${CMAKE_CURRENT_LIST_DIR}/mpfr)
 
 # Default patch command; enable on LoongArch to fix __int128__ token
-set(patch_command "")
+set(patch_command git init && ${PATCH_CMD} ${CMAKE_CURRENT_LIST_DIR}/0001-fix-printf.patch)
 set(_mpfr_cppflags "")
 if (${CMAKE_SYSTEM_PROCESSOR} MATCHES "loongarch")
     # Apply patch if possible; tolerate failure and rely on CPPFLAGS workaround
@@ -34,8 +34,8 @@ else ()
     endif ()
 
     ExternalProject_Add(dep_MPFR
-        URL https://www.mpfr.org/mpfr-4.2.2/mpfr-4.2.2.tar.bz2
-        URL_HASH SHA256=9AD62C7DC910303CD384FF8F1F4767A655124980BB6D8650FE62C815A231BB7B
+        URL https://www.mpfr.org/mpfr-4.2.1/mpfr-4.2.1.tar.bz2
+        URL_HASH SHA256=b9df93635b20e4089c29623b19420c4ac848a1b29df1cfd59f26cab0d2666aa0
         DOWNLOAD_DIR ${DEP_DOWNLOAD_DIR}/MPFR
         PATCH_COMMAND ${patch_command}
         BUILD_IN_SOURCE ON
